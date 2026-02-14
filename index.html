@@ -8,6 +8,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+/* Responsividad botones */
+.love-responsive{
+width:80%;
+max-width:250px;
+font-size:clamp(14px,4vw,18px);
+padding:14px;
+}
+
+/* Corazón adaptable */
+.big-heart{
+font-size:clamp(50px,12vw,90px);
+transition:transform 0.4s ease, font-size 0.4s ease;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* Texto interno animado */
+.big-heart span{
+position:absolute;
+color:white;
+font-size:clamp(12px,3vw,18px);
+text-align:center;
+padding:10px;
+opacity:0;
+transform:scale(0.5);
+animation:loveReveal 1.5s ease forwards;
+}
+
+@keyframes loveReveal{
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* Corazones cayendo */
+.falling-heart{
+position:fixed;
+top:-20px;
+font-size:20px;
+color:#ff4fa3;
+animation:fall 4s linear forwards;
+z-index:999;
+}
+
+@keyframes fall{
+0%{transform:translateY(0) rotate(0deg);opacity:1;}
+100%{transform:translateY(100vh) rotate(360deg);opacity:0;}
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
