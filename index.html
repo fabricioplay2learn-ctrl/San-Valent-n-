@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para América 💖</title>
+<title>José ❤️ América</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -11,12 +11,20 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
 font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#ff5f9e,#ff89c2);
+background:radial-gradient(circle at top,#ff6fa5,#d63384,#8e2de2);
 overflow:hidden;
 color:white;
 }
 
-/* Pantallas */
+/* Fondo partículas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* Glass container */
 .screen{
 position:absolute;
 width:100%;
@@ -27,6 +35,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:25px;
+backdrop-filter:blur(15px);
 transition:1s ease;
 }
 
@@ -36,102 +45,105 @@ pointer-events:none;
 transform:scale(0.9);
 }
 
-/* Títulos románticos */
+/* Títulos */
 h1{
 font-family:'Great Vibes',cursive;
-font-size:50px;
+font-size:55px;
 margin-bottom:20px;
+letter-spacing:2px;
 animation:fadeIn 2s ease forwards;
 }
 
-p{
-max-width:700px;
-opacity:0;
-transform:translateY(20px);
-transition:1.5s ease;
-margin-bottom:15px;
+/* Texto escritura */
+.typing{
+border-right:2px solid white;
+white-space:nowrap;
+overflow:hidden;
+animation:typing 4s steps(40,end), blink 0.8s infinite;
 }
 
-p.show{
-opacity:1;
-transform:translateY(0);
+@keyframes typing{
+from{width:0}
+to{width:100%}
+}
+@keyframes blink{
+50%{border-color:transparent;}
 }
 
-/* Botón corazón */
+/* Botón latido */
 .heart-btn{
-margin-top:25px;
+margin-top:30px;
 padding:15px 35px;
 border:none;
 border-radius:50px;
 background:white;
-color:#ff4f81;
+color:#d63384;
 font-weight:bold;
 font-size:16px;
 cursor:pointer;
+box-shadow:0 0 15px rgba(255,255,255,0.5);
 animation:heartbeat 1.5s infinite;
 transition:0.3s;
 }
 
 @keyframes heartbeat{
 0%{transform:scale(1);}
-25%{transform:scale(1.1);}
-50%{transform:scale(1);}
-75%{transform:scale(1.15);}
+25%{transform:scale(1.15);}
+40%{transform:scale(1);}
+60%{transform:scale(1.2);}
 100%{transform:scale(1);}
 }
 
 .heart-btn:hover{
-background:#ffe6ef;
-}
-
-/* Fondo partículas */
-canvas{
-position:absolute;
-top:0;
-left:0;
-z-index:-1;
+transform:scale(1.1);
 }
 
 /* Historia scroll */
 .story-container{
 max-height:65vh;
 overflow-y:auto;
-padding-right:10px;
+padding:10px;
 }
 
-/* Animación fade */
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
+/* Reveal texto */
+.fade-text{
+opacity:0;
+transform:translateY(20px);
+transition:1s ease;
+margin-bottom:15px;
 }
 
-/* Animación especial 19 diciembre */
+.fade-text.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* Animación especial */
 .special-day{
-position:absolute;
+position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.85);
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
 z-index:999;
 animation:fadeIn 2s ease forwards;
 }
 
 .special-day h2{
 font-family:'Great Vibes',cursive;
-font-size:45px;
+font-size:50px;
 margin-bottom:20px;
 }
 
 /* Responsive */
 @media(max-width:600px){
-h1{font-size:36px;}
-.special-day h2{font-size:30px;}
+h1{font-size:38px;}
+.special-day h2{font-size:35px;}
 }
 </style>
 </head>
@@ -140,24 +152,22 @@ h1{font-size:36px;}
 
 <canvas id="bg"></canvas>
 
-<!-- Inicio -->
+<!-- INICIO -->
 <div class="screen" id="inicio">
-<h1>Para América 💖</h1>
-<p class="fade-text">El destino nos separó una vez…</p>
-<p class="fade-text">Pero decidió volver a unirnos.</p>
-<p class="fade-text">Y desde entonces, te vuelvo a elegir cada día.</p>
-<button class="heart-btn" onclick="irOpciones()">Entrar a nuestra historia 💞</button>
+<h1>José & América 💖</h1>
+<p class="typing">El destino nos volvió a unir...</p>
+<button class="heart-btn" onclick="irOpciones()">Entrar a nuestra historia ✨</button>
 </div>
 
-<!-- Opciones -->
+<!-- OPCIONES -->
 <div class="screen hidden" id="opciones">
-<h1>Nuestras Historias ✨</h1>
+<h1>Nuestras Historias 💞</h1>
 <button class="heart-btn" onclick="verHistoria(1)">Ofir y el Amor</button>
 <button class="heart-btn" onclick="verHistoria(2)">Donde Siempre Volvimos a Elegirnos</button>
 <button class="heart-btn" onclick="volverInicio()">Volver</button>
 </div>
 
-<!-- Historia -->
+<!-- HISTORIA -->
 <div class="screen hidden" id="historia">
 <h1 id="tituloHistoria"></h1>
 <div class="story-container" id="contenidoHistoria"></div>
@@ -171,12 +181,10 @@ function irOpciones(){
 document.getElementById("inicio").classList.add("hidden");
 document.getElementById("opciones").classList.remove("hidden");
 }
-
 function volverInicio(){
 document.getElementById("opciones").classList.add("hidden");
 document.getElementById("inicio").classList.remove("hidden");
 }
-
 function volverOpciones(){
 document.getElementById("historia").classList.add("hidden");
 document.getElementById("opciones").classList.remove("hidden");
@@ -190,70 +198,68 @@ if(num===1){
 titulo.innerText="Ofir y el Amor";
 contenido.innerHTML=`
 <p class="fade-text">José soñaba con grandeza.</p>
-<p class="fade-text">Pero el verdadero tesoro era América.</p>
-<p class="fade-text">Ella fue calma, apoyo y fe.</p>
-<p class="fade-text">Y juntos construyen no solo un negocio…</p>
-<p class="fade-text">Sino un futuro.</p>
+<p class="fade-text">Pero su mayor tesoro era América.</p>
+<p class="fade-text">Ella fue apoyo, fe y ternura.</p>
+<p class="fade-text">Y juntos construyen algo eterno.</p>
 `;
 }
 
 if(num===2){
 titulo.innerText="Donde Siempre Volvimos a Elegirnos";
 contenido.innerHTML=`
-<p class="fade-text">Un juego nos volvió rivales.</p>
-<p class="fade-text">Pero el destino nos volvió a unir.</p>
-<p class="fade-text">Viajé de Cochabamba a Potosí para abrazarte.</p>
-<p class="fade-text">Y lo haría mil veces más.</p>
+<p class="fade-text">Un juego nos hizo rivales.</p>
+<p class="fade-text">Pero el destino nos hizo uno.</p>
+<p class="fade-text">De Cochabamba a Potosí viajé por ti.</p>
 <p class="fade-text">El 19 de diciembre de 2025 dijimos sí.</p>
-<p class="fade-text">Porque siempre nos volvemos a elegir.</p>
+<p class="fade-text">Y siempre nos volveremos a elegir.</p>
 `;
 }
 
 document.getElementById("opciones").classList.add("hidden");
 document.getElementById("historia").classList.remove("hidden");
 
-mostrarTextoAnimado();
+mostrarTexto();
 }
 
-/* Letras aparecen al hacer scroll */
-function mostrarTextoAnimado(){
+/* Reveal */
+function mostrarTexto(){
 const textos=document.querySelectorAll(".fade-text");
 textos.forEach((t,i)=>{
 setTimeout(()=>{t.classList.add("show");}, i*800);
 });
 }
 
-/* Fondo partículas románticas */
+/* Partículas románticas */
 const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
-let hearts=[];
-for(let i=0;i<40;i++){
-hearts.push({
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
-size:Math.random()*3+2,
-speed:Math.random()*1+0.5
+size:Math.random()*2+1,
+speed:Math.random()*1+0.3
 });
 }
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="rgba(255,255,255,0.6)";
-hearts.forEach(h=>{
+ctx.fillStyle="rgba(255,255,255,0.7)";
+particles.forEach(p=>{
 ctx.beginPath();
-ctx.arc(h.x,h.y,h.size,0,Math.PI*2);
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
-h.y-=h.speed;
-if(h.y<0){h.y=canvas.height;}
+p.y-=p.speed;
+if(p.y<0){p.y=canvas.height;}
 });
 requestAnimationFrame(animate);
 }
 animate();
 
-/* Evento especial 19 diciembre */
+/* 19 diciembre fuegos artificiales */
 let today=new Date();
 if(today.getDate()===19 && today.getMonth()===11){
 let special=document.createElement("div");
