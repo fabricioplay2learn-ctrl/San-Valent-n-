@@ -1,78 +1,448 @@
-<!DOCTYPE html>  
-<html lang="es">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>José ❤️ América</title>  
-  
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  
-  
-<style>  
-/* Responsividad botones */  
-.love-responsive{  
-width:80%;  
-max-width:250px;  
-font-size:clamp(14px,4vw,18px);  
-padding:14px;  
-}  
-  
-/* Corazón adaptable */  
-.big-heart{  
-font-size:clamp(50px,12vw,90px);  
-transition:transform 0.4s ease, font-size 0.4s ease;  
-position:relative;  
-display:flex;  
-justify-content:center;  
-align-items:center;  
-}  
-  
-/* Texto interno animado */  
-.big-heart span{  
-position:absolute;  
-color:white;  
-font-size:clamp(12px,3vw,18px);  
-text-align:center;  
-padding:10px;  
-opacity:0;  
-transform:scale(0.5);  
-animation:loveReveal 1.5s ease forwards;  
-}  
-  
-@keyframes loveReveal{  
-to{  
-opacity:1;  
-transform:scale(1);  
-}  
-}  
-  
-/* Corazones cayendo */  
-.falling-heart{  
-position:fixed;  
-top:-20px;  
-font-size:20px;  
-color:#ff4fa3;  
-animation:fall 4s linear forwards;  
-z-index:999;  
-}  
-  
-@keyframes fall{  
-0%{transform:translateY(0) rotate(0deg);opacity:1;}  
-100%{transform:translateY(100vh) rotate(360deg);opacity:0;}  
-}  
-*{margin:0;padding:0;box-sizing:border-box;}  
-  
-body{  
-font-family:'Poppins',sans-serif;  
-background:linear-gradient(160deg,#0f0f0f,#1a1a1a,#262626);  
-color:white;  
-min-height:100vh;  
-overflow:hidden;  
-position:relative;  
-}  
-  
-/* Borde iluminado */  
-body::before{  
-content:"";  
-position:fixed;  
-top:10px;  
-  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>José ❤️ América</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(160deg,#0f0f0f,#1a1a1a,#262626);
+color:white;
+min-height:100vh;
+overflow:hidden;
+position:relative;
+}
+
+/* Borde iluminado */
+body::before{
+content:"";
+position:fixed;
+top:10px;
+left:10px;
+right:10px;
+bottom:10px;
+border-radius:25px;
+box-shadow:
+0 0 20px #ff4fa3,
+0 0 40px rgba(255,79,163,0.6),
+inset 0 0 30px rgba(255,79,163,0.2);
+pointer-events:none;
+z-index:1;
+}
+
+/* Fondo partículas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+}
+
+/* Pantallas */
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:25px;
+z-index:2;
+transition:1s ease;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
+transform:scale(0.95);
+}
+
+/* Títulos */
+h1{
+font-family:'Great Vibes',cursive;
+font-size:52px;
+margin-bottom:20px;
+color:#ff85c1;
+text-shadow:0 0 15px #ff4fa3;
+}
+
+/* Texto animado */
+.fade-text{
+opacity:0;
+transform:translateY(20px);
+transition:1s ease;
+margin-bottom:15px;
+max-width:700px;
+}
+
+.fade-text.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* Botones */
+.heart-btn{
+margin-top:15px;
+padding:14px 35px;
+border:none;
+border-radius:50px;
+background:#ff4fa3;
+color:white;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+box-shadow:0 0 15px #ff4fa3;
+animation:heartbeat 1.6s infinite;
+transition:0.3s;
+}
+
+.heart-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 25px #ff85c1;
+}
+
+@keyframes heartbeat{
+0%{transform:scale(1);}
+25%{transform:scale(1.1);}
+50%{transform:scale(1);}
+75%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
+
+/* Scroll historia */
+.story-container{
+max-height:65vh;
+overflow-y:auto;
+padding:10px;
+}
+
+/* Sección corazón */
+.love-section{
+margin-top:30px;
+text-align:center;
+}
+
+.love-section h2{
+font-family:'Great Vibes',cursive;
+font-size:32px;
+color:#ff85c1;
+margin-bottom:10px;
+text-shadow:0 0 10px #ff4fa3;
+}
+
+.heart-container{
+height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.big-heart{
+font-size:60px;
+transition:0.4s ease;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.big-heart span{
+position:absolute;
+font-size:14px;
+text-align:center;
+padding:10px;
+max-width:120px;
+}
+
+/* Evento especial */
+.special-day{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:10;
+text-align:center;
+}
+
+.special-day h2{
+font-family:'Great Vibes',cursive;
+font-size:45px;
+color:#ff85c1;
+margin-bottom:20px;
+}
+
+@media(max-width:600px){
+h1{font-size:34px;}
+.love-section h2{font-size:26px;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- INICIO -->
+<div class="screen" id="inicio">
+<h1>José & América 💖</h1>
+<p class="fade-text show">
+El destino nos separó una vez…  
+pero decidió volver a unirnos.
+</p>
+<button class="heart-btn" onclick="irOpciones()">Entrar a nuestra historia ✨</button>
+</div>
+
+<!-- OPCIONES -->
+<div class="screen hidden" id="opciones">
+<h1>Nuestras Historias 💞</h1>
+<button class="heart-btn" onclick="verHistoria(1)">Ofir y el Amor</button>
+<button class="heart-btn" onclick="verHistoria(2)">Donde Siempre Volvimos a Elegirnos</button>
+<button class="heart-btn" onclick="volverInicio()">Volver</button>
+</div>
+
+<!-- HISTORIA -->
+<div class="screen hidden" id="historia">
+<h1 id="tituloHistoria"></h1>
+<div class="story-container" id="contenidoHistoria"></div>
+<button class="heart-btn" onclick="volverOpciones()">Elegir otra historia</button>
+</div>
+
+<script>
+
+/* Navegación */
+function irOpciones(){inicio.classList.add("hidden");opciones.classList.remove("hidden");}
+function volverInicio(){opciones.classList.add("hidden");inicio.classList.remove("hidden");}
+function volverOpciones(){historia.classList.add("hidden");opciones.classList.remove("hidden");}
+
+/* Historias */
+function verHistoria(num){
+let titulo=document.getElementById("tituloHistoria");
+let contenido=document.getElementById("contenidoHistoria");
+
+if(num===1){
+titulo.innerText="💖 La Historia de José Fabricio y América Carla 💖";
+contenido.innerHTML=`
+
+<p class="fade-text">Había una vez, en Bolivia, un joven llamado José Fabricio, que no solo soñaba con vender productos… soñaba con construir algo grande.</p>
+
+<p class="fade-text">No era solo una tienda.</p>
+<p class="fade-text">Era una visión.</p>
+<p class="fade-text">Era esfuerzo.</p>
+<p class="fade-text">Era disciplina.</p>
+<p class="fade-text">Era fe.</p>
+
+<p class="fade-text">Y en ese camino apareció alguien especial: América Carla.</p>
+
+<p class="fade-text">No fue solo una novia.</p>
+<p class="fade-text">Fue calma en los días difíciles.</p>
+<p class="fade-text">Fue apoyo cuando el estrés del negocio pesaba.</p>
+<p class="fade-text">Fue sonrisa cuando los números no cuadraban.</p>
+<p class="fade-text">Fue motivación cuando el mundo parecía complicado.</p>
+
+<p class="fade-text">Mientras José hablaba de importaciones, sistemas, paneles admin, estrategias y crecimiento…</p>
+
+<p class="fade-text">América escuchaba.</p>
+
+<p class="fade-text">Y aunque tal vez no siempre entendía cada detalle técnico, entendía algo más importante: el corazón detrás del sueño.</p>
+
+<p class="fade-text">Porque amar a un emprendedor no es fácil.</p>
+
+<p class="fade-text">Es aceptar días ocupados.</p>
+<p class="fade-text">Es aceptar metas grandes.</p>
+<p class="fade-text">Es creer en procesos largos.</p>
+<p class="fade-text">Es apoyar cuando todavía no se ven los frutos.</p>
+
+<p class="fade-text">Y América Carla eligió creer.</p>
+
+<p class="fade-text">José no solo está construyendo una tienda…</p>
+
+<p class="fade-text">Está construyendo un futuro.</p>
+
+<p class="fade-text">Y en ese futuro, ella no es un capítulo pasajero.</p>
+
+<p class="fade-text">Es parte de la historia.</p>
+
+<p class="fade-text">Hoy, en San Valentín, no se celebra solo el amor romántico.</p>
+
+<p class="fade-text">Se celebra el compañerismo.</p>
+<p class="fade-text">La lealtad.</p>
+<p class="fade-text">La paciencia.</p>
+<p class="fade-text">La fe en el otro.</p>
+
+<p class="fade-text">José Fabricio, el joven que quiere crecer, prosperar y dejar huella…</p>
+
+<p class="fade-text">No camina solo.</p>
+
+<p class="fade-text">Camina con alguien que cree en él.</p>
+
+<p class="fade-text">Y eso…</p>
+
+<p class="fade-text">Vale más que cualquier importación de oro de Ofir. ✨</p>
+
+`;
+}
+
+if(num===2){
+titulo.innerText="💞 Donde Siempre Volvimos a Elegirnos 💞";
+contenido.innerHTML=`
+
+<p class="fade-text">Hay amores que comienzan con una mirada.</p>
+<p class="fade-text">Otros con una conversación.</p>
+<p class="fade-text">Pero el de José Fabricio y América Carla comenzó dos veces.</p>
+
+<p class="fade-text">Se conocieron casi dos años antes de entender lo que realmente eran el uno para el otro.</p>
+
+<p class="fade-text">La vida los separó un tiempo…</p>
+<p class="fade-text">pero el destino tenía otros planes.</p>
+
+<p class="fade-text">Y fue algo tan simple —un juego— lo que volvió a cruzar sus caminos.</p>
+
+<p class="fade-text">No como compañeros.</p>
+<p class="fade-text">No como desconocidos.</p>
+<p class="fade-text">Sino como rivales.</p>
+
+<p class="fade-text">Y a veces, el amor comienza compitiendo…</p>
+<p class="fade-text">pero termina rindiéndose.</p>
+
+<p class="fade-text">Desde Cochabamba, José tomó una decisión que cambió todo:</p>
+<p class="fade-text">viajar hasta Potosí.</p>
+
+<p class="fade-text">No era solo un viaje.</p>
+<p class="fade-text">Era valentía.</p>
+<p class="fade-text">Era certeza.</p>
+<p class="fade-text">Era decir: “No quiero perderte otra vez.”</p>
+
+<br>
+
+<p class="fade-text">Cuando se volvieron a ver, no hicieron falta discursos largos.</p>
+<p class="fade-text">El abrazo habló primero.</p>
+
+<p class="fade-text">Ese abrazo que no solo junta cuerpos…</p>
+<p class="fade-text">sino tiempos perdidos.</p>
+
+<p class="fade-text">José viajó una vez.</p>
+<p class="fade-text">Luego otra.</p>
+
+<p class="fade-text">Y aunque el cansancio existía, el amor pesaba más.</p>
+
+<p class="fade-text">Porque cuando uno ama de verdad, los kilómetros no asustan.</p>
+
+<p class="fade-text">América, con su corazón tan sensible, siempre fue paciente.</p>
+<p class="fade-text">Siempre amorosa.</p>
+<p class="fade-text">Siempre suave en su forma de querer.</p>
+
+<p class="fade-text">Pero cada despedida tenía un precio.</p>
+
+<p class="fade-text">Después de que José regresaba a Cochabamba, ella lloraba.</p>
+
+<p class="fade-text">No por debilidad…</p>
+<p class="fade-text">sino porque su corazón siente profundo.</p>
+
+<p class="fade-text">Y eso no es fragilidad.</p>
+<p class="fade-text">Es pureza.</p>
+
+<p class="fade-text">El 19 de diciembre de 2025, decidieron algo que no se toma a la ligera:</p>
+<p class="fade-text">comprometerse.</p>
+
+<p class="fade-text">No fue un impulso.</p>
+<p class="fade-text">Fue una elección consciente.</p>
+
+<p class="fade-text">Fue decir:</p>
+<p class="fade-text">“No importa cuántos viajes falten… yo te elijo.”</p>
+
+<p class="fade-text">Porque su historia no es de casualidad.</p>
+<p class="fade-text">Es de reencuentro.</p>
+<p class="fade-text">Es de insistencia.</p>
+<p class="fade-text">Es de volver a mirar a la misma persona y decir:</p>
+<p class="fade-text">“Sigue siendo tú.”</p>
+
+<p class="fade-text">Y mientras falten viajes, abrazos pendientes y lágrimas después de despedidas…</p>
+<p class="fade-text">habrá también más reencuentros.</p>
+
+<p class="fade-text">Porque hay amores que se encuentran una vez.</p>
+
+<p class="fade-text">Y hay amores que, aunque el mundo los separe,</p>
+<p class="fade-text">siempre vuelven a elegirse.</p>
+
+<br><br>
+
+<div class="love-section">
+<h2>¿Me amas? 💗</h2>
+
+<div class="heart-container">
+    <div id="bigHeart" class="big-heart">❤️</div>
+</div>
+
+<button class="heart-btn love-responsive" onclick="growHeart()">
+    Te Amo
+  </button>
+</div>
+
+`;
+}
+
+opciones.classList.add("hidden");
+historia.classList.remove("hidden");
+
+document.querySelectorAll(".fade-text").forEach((t,i)=>{
+setTimeout(()=>{t.classList.add("show");}, i*600);
+});
+}
+
+/* Corazón interactivo */
+let heartSize=60;
+let clicks=0;
+function growHeart(){
+const heart=document.getElementById("bigHeart");
+clicks++;
+heartSize+=15;
+heart.style.fontSize=heartSize+"px";
+if(clicks>=8){
+heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
+}
+}
+
+/* Fondo partículas */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<100;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2+1,speed:Math.random()*0.5+0.2});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#ff4fa3";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+p.y-=p.speed;
+if(p.y<0){p.y=canvas.height;}
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+</script>
+
+</body>
