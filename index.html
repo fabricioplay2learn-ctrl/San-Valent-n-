@@ -443,6 +443,52 @@ requestAnimationFrame(animate);
 }
 animate();
 
+const backBtn = document.querySelector(".back-btn");
+
+function goBack(){
+  if(!opciones.classList.contains("hidden")){
+    volverInicio();
+  }
+  else if(!historia.classList.contains("hidden")){
+    volverOpciones();
+  }
+}
+
+/* Mostrar u ocultar botón según pantalla */
+function updateBackButton(){
+  if(!inicio.classList.contains("hidden")){
+    backBtn.classList.add("hidden-back");
+  } else {
+    backBtn.classList.remove("hidden-back");
+  }
+}
+
+/* Llamar cada vez que cambias pantalla */
+function irOpciones(){
+  inicio.classList.add("hidden");
+  opciones.classList.remove("hidden");
+  updateBackButton();
+}
+
+function volverInicio(){
+  opciones.classList.add("hidden");
+  inicio.classList.remove("hidden");
+  updateBackButton();
+}
+
+function volverOpciones(){
+  historia.classList.add("hidden");
+  opciones.classList.remove("hidden");
+  updateBackButton();
+}
+
+function verHistoria(num){
+  opciones.classList.add("hidden");
+  historia.classList.remove("hidden");
+  updateBackButton();
+}
+
+
 </script>
 
 </body>
