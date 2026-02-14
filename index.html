@@ -49,7 +49,7 @@ transform:scale(0.9);
 /* Títulos */
 h1{
 font-family:'Great Vibes',cursive;
-font-size:55px;
+font-size:50px;
 margin-bottom:20px;
 }
 
@@ -67,9 +67,9 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* Botón corazón */
+/* Botones corazón */
 .heart-btn{
-margin-top:20px;
+margin-top:15px;
 padding:15px 35px;
 border:none;
 border-radius:50px;
@@ -97,9 +97,63 @@ transform:scale(1.1);
 
 /* Scroll historia */
 .story-container{
-max-height:65vh;
+max-height:60vh;
 overflow-y:auto;
 padding:10px;
+}
+
+/* Sección amor interactiva */
+.love-section{
+position:fixed;
+bottom:0;
+width:100%;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+padding:25px 15px;
+text-align:center;
+}
+
+.love-section h2{
+font-family:'Great Vibes',cursive;
+font-size:35px;
+margin-bottom:10px;
+}
+
+.heart-container{
+height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.big-heart{
+font-size:60px;
+transition:0.4s ease;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.big-heart span{
+position:absolute;
+color:white;
+font-size:16px;
+text-align:center;
+padding:10px;
+max-width:120px;
+}
+
+.love-btn{
+margin-top:10px;
+padding:12px 30px;
+border:none;
+border-radius:50px;
+background:white;
+color:#d63384;
+font-weight:bold;
+cursor:pointer;
+animation:heartbeat 1.6s infinite;
 }
 
 /* Evento especial */
@@ -120,13 +174,14 @@ text-align:center;
 
 .special-day h2{
 font-family:'Great Vibes',cursive;
-font-size:50px;
+font-size:45px;
 margin-bottom:20px;
 }
 
 @media(max-width:600px){
-h1{font-size:38px;}
-.special-day h2{font-size:32px;}
+h1{font-size:36px;}
+.love-section h2{font-size:28px;}
+.special-day h2{font-size:30px;}
 }
 </style>
 </head>
@@ -160,22 +215,29 @@ pero decidió volver a unirnos.
 <button class="heart-btn" onclick="volverOpciones()">Elegir otra historia</button>
 </div>
 
+<!-- SECCIÓN ¿ME AMAS? -->
+<div class="love-section">
+<h2>¿Me amas? 💗</h2>
+<div class="heart-container">
+<div id="bigHeart" class="big-heart">❤️</div>
+</div>
+<button class="love-btn" onclick="growHeart()">Te Amo</button>
+</div>
+
 <script>
 
 /* Navegación */
 function irOpciones(){
-document.getElementById("inicio").classList.add("hidden");
-document.getElementById("opciones").classList.remove("hidden");
+inicio.classList.add("hidden");
+opciones.classList.remove("hidden");
 }
-
 function volverInicio(){
-document.getElementById("opciones").classList.add("hidden");
-document.getElementById("inicio").classList.remove("hidden");
+opciones.classList.add("hidden");
+inicio.classList.remove("hidden");
 }
-
 function volverOpciones(){
-document.getElementById("historia").classList.add("hidden");
-document.getElementById("opciones").classList.remove("hidden");
+historia.classList.add("hidden");
+opciones.classList.remove("hidden");
 }
 
 function verHistoria(num){
@@ -186,15 +248,14 @@ if(num===1){
 titulo.innerText="Ofir y el Amor";
 contenido.innerHTML=`
 <p class="fade-text">Había una vez un soñador llamado José Fabricio.</p>
-<p class="fade-text">Construía algo grande llamado Ofir, lleno de visión y esperanza.</p>
+<p class="fade-text">Construía algo grande llamado Ofir.</p>
 <p class="fade-text">Pero el verdadero tesoro no era oro… era América.</p>
 <p class="fade-text">Ella fue apoyo cuando el camino era difícil.</p>
 <p class="fade-text">Fue calma cuando el estrés pesaba.</p>
 <p class="fade-text">Fue fe cuando aún no se veían los frutos.</p>
-<p class="fade-text">Mientras él soñaba con grandeza,</p>
-<p class="fade-text">ella soñaba con verlo lograrlo.</p>
+<p class="fade-text">Mientras él soñaba con grandeza, ella soñaba con verlo lograrlo.</p>
 <p class="fade-text">No era solo una historia de comercio.</p>
-<p class="fade-text">Era una historia de amor que crecía junto a cada meta.</p>
+<p class="fade-text">Era una historia de amor creciendo juntos.</p>
 `;
 }
 
@@ -202,33 +263,27 @@ if(num===2){
 titulo.innerText="Donde Siempre Volvimos a Elegirnos";
 contenido.innerHTML=`
 <p class="fade-text">Nos conocimos hace casi dos años.</p>
-<p class="fade-text">La vida nos separó…</p>
-<p class="fade-text">pero un juego nos volvió rivales.</p>
+<p class="fade-text">La vida nos separó… pero un juego nos volvió rivales.</p>
 <p class="fade-text">Y el destino nos volvió a unir.</p>
 <p class="fade-text">Desde Cochabamba viajé hasta Potosí para verte.</p>
-<p class="fade-text">Para abrazarte.</p>
-<p class="fade-text">Para amarte.</p>
-<p class="fade-text">Viajé una vez.</p>
-<p class="fade-text">Luego otra.</p>
+<p class="fade-text">Viajé una vez. Luego otra.</p>
 <p class="fade-text">Y lo volvería a hacer mil veces más.</p>
 <p class="fade-text">El 19 de diciembre de 2025 nos comprometimos.</p>
 <p class="fade-text">Y aunque después de cada despedida llorabas,</p>
-<p class="fade-text">no era tristeza… era amor profundo.</p>
-<p class="fade-text">Porque siempre, sin importar la distancia,</p>
-<p class="fade-text">nos volvemos a elegir.</p>
+<p class="fade-text">era amor profundo.</p>
+<p class="fade-text">Porque siempre nos volvemos a elegir.</p>
 `;
 }
 
-document.getElementById("opciones").classList.add("hidden");
-document.getElementById("historia").classList.remove("hidden");
+opciones.classList.add("hidden");
+historia.classList.remove("hidden");
 
 animarTexto();
 }
 
-/* Animar aparición */
+/* Animación texto */
 function animarTexto(){
-const textos=document.querySelectorAll(".fade-text");
-textos.forEach((t,i)=>{
+document.querySelectorAll(".fade-text").forEach((t,i)=>{
 setTimeout(()=>{t.classList.add("show");}, i*700);
 });
 }
@@ -262,6 +317,21 @@ if(p.y<0){p.y=canvas.height;}
 requestAnimationFrame(animate);
 }
 animate();
+
+/* Corazón interactivo */
+let heartSize=60;
+let clicks=0;
+
+function growHeart(){
+const heart=document.getElementById("bigHeart");
+clicks++;
+heartSize+=15;
+heart.style.fontSize=heartSize+"px";
+
+if(clicks>=8){
+heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
+}
+}
 
 /* Evento especial 19 diciembre */
 let today=new Date();
