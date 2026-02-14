@@ -19,7 +19,7 @@ overflow:hidden;
 position:relative;
 }
 
-/* Borde iluminado alrededor de toda la página */
+/* Borde iluminado */
 body::before{
 content:"";
 position:fixed;
@@ -121,22 +121,15 @@ box-shadow:0 0 25px #ff85c1;
 
 /* Scroll historia */
 .story-container{
-max-height:60vh;
+max-height:65vh;
 overflow-y:auto;
 padding:10px;
 }
 
-/* Sección amor */
+/* Sección corazón */
 .love-section{
-position:fixed;
-bottom:0;
-width:100%;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(8px);
-padding:20px;
+margin-top:30px;
 text-align:center;
-z-index:3;
-border-top:1px solid rgba(255,79,163,0.4);
 }
 
 .love-section h2{
@@ -230,15 +223,6 @@ pero decidió volver a unirnos.
 <button class="heart-btn" onclick="volverOpciones()">Elegir otra historia</button>
 </div>
 
-<!-- ¿ME AMAS? -->
-<div class="love-section">
-<h2>¿Me amas? 💗</h2>
-<div class="heart-container">
-<div id="bigHeart" class="big-heart">❤️</div>
-</div>
-<button class="heart-btn" onclick="growHeart()">Te Amo</button>
-</div>
-
 <script>
 
 /* Navegación */
@@ -268,7 +252,16 @@ contenido.innerHTML=`
 <p class="fade-text">Un juego nos volvió rivales.</p>
 <p class="fade-text">Desde Cochabamba viajé hasta Potosí por ti.</p>
 <p class="fade-text">El 19 de diciembre de 2025 nos comprometimos.</p>
-<p class="fade-text">Y siempre nos volveremos a elegir.</p>`;
+<p class="fade-text">Y siempre nos volveremos a elegir.</p>
+
+<div class="love-section">
+<h2>¿Me amas? 💗</h2>
+<div class="heart-container">
+<div id="bigHeart" class="big-heart">❤️</div>
+</div>
+<button class="heart-btn" onclick="growHeart()">Te Amo</button>
+</div>
+`;
 }
 
 opciones.classList.add("hidden");
@@ -277,6 +270,19 @@ historia.classList.remove("hidden");
 document.querySelectorAll(".fade-text").forEach((t,i)=>{
 setTimeout(()=>{t.classList.add("show");}, i*600);
 });
+}
+
+/* Corazón interactivo */
+let heartSize=60;
+let clicks=0;
+function growHeart(){
+const heart=document.getElementById("bigHeart");
+clicks++;
+heartSize+=15;
+heart.style.fontSize=heartSize+"px";
+if(clicks>=8){
+heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
+}
 }
 
 /* Fondo partículas */
@@ -303,31 +309,6 @@ if(p.y<0){p.y=canvas.height;}
 requestAnimationFrame(animate);
 }
 animate();
-
-/* Corazón interactivo */
-let heartSize=60;
-let clicks=0;
-function growHeart(){
-const heart=document.getElementById("bigHeart");
-clicks++;
-heartSize+=15;
-heart.style.fontSize=heartSize+"px";
-if(clicks>=8){
-heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
-}
-}
-
-/* Evento 19 diciembre */
-let today=new Date();
-if(today.getDate()===19 && today.getMonth()===11){
-let special=document.createElement("div");
-special.classList.add("special-day");
-special.innerHTML=`
-<h2>19 de Diciembre 💍</h2>
-<p>El día que prometimos elegirnos para siempre.</p>
-<button class="heart-btn" onclick="this.parentElement.remove()">Cerrar</button>`;
-document.body.appendChild(special);
-}
 
 </script>
 
