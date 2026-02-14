@@ -12,17 +12,38 @@
 
 body{
 font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#ff6fa5,#d63384,#8e2de2);
+background:linear-gradient(160deg,#0f0f0f,#1a1a1a,#262626);
 color:white;
+min-height:100vh;
 overflow:hidden;
+position:relative;
 }
 
-/* Fondo animado */
+/* Borde iluminado alrededor de toda la página */
+body::before{
+content:"";
+position:fixed;
+top:10px;
+left:10px;
+right:10px;
+bottom:10px;
+border-radius:25px;
+box-shadow:
+0 0 20px #ff4fa3,
+0 0 40px rgba(255,79,163,0.6),
+inset 0 0 30px rgba(255,79,163,0.2);
+pointer-events:none;
+z-index:1;
+}
+
+/* Fondo partículas */
 canvas{
 position:fixed;
 top:0;
 left:0;
-z-index:-1;
+width:100%;
+height:100%;
+z-index:0;
 }
 
 /* Pantallas */
@@ -36,21 +57,23 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:25px;
-backdrop-filter:blur(15px);
+z-index:2;
 transition:1s ease;
 }
 
 .hidden{
 opacity:0;
 pointer-events:none;
-transform:scale(0.9);
+transform:scale(0.95);
 }
 
 /* Títulos */
 h1{
 font-family:'Great Vibes',cursive;
-font-size:50px;
+font-size:52px;
 margin-bottom:20px;
+color:#ff85c1;
+text-shadow:0 0 15px #ff4fa3;
 }
 
 /* Texto animado */
@@ -67,32 +90,33 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* Botones corazón */
+/* Botones */
 .heart-btn{
 margin-top:15px;
-padding:15px 35px;
+padding:14px 35px;
 border:none;
 border-radius:50px;
-background:white;
-color:#d63384;
+background:#ff4fa3;
+color:white;
 font-weight:bold;
 font-size:16px;
 cursor:pointer;
-box-shadow:0 0 20px rgba(255,255,255,0.5);
+box-shadow:0 0 15px #ff4fa3;
 animation:heartbeat 1.6s infinite;
 transition:0.3s;
 }
 
-@keyframes heartbeat{
-0%{transform:scale(1);}
-25%{transform:scale(1.12);}
-40%{transform:scale(1);}
-60%{transform:scale(1.18);}
-100%{transform:scale(1);}
-}
-
 .heart-btn:hover{
 transform:scale(1.1);
+box-shadow:0 0 25px #ff85c1;
+}
+
+@keyframes heartbeat{
+0%{transform:scale(1);}
+25%{transform:scale(1.1);}
+50%{transform:scale(1);}
+75%{transform:scale(1.15);}
+100%{transform:scale(1);}
 }
 
 /* Scroll historia */
@@ -102,21 +126,25 @@ overflow-y:auto;
 padding:10px;
 }
 
-/* Sección amor interactiva */
+/* Sección amor */
 .love-section{
 position:fixed;
 bottom:0;
 width:100%;
-background:rgba(0,0,0,0.4);
-backdrop-filter:blur(10px);
-padding:25px 15px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(8px);
+padding:20px;
 text-align:center;
+z-index:3;
+border-top:1px solid rgba(255,79,163,0.4);
 }
 
 .love-section h2{
 font-family:'Great Vibes',cursive;
-font-size:35px;
+font-size:32px;
+color:#ff85c1;
 margin-bottom:10px;
+text-shadow:0 0 10px #ff4fa3;
 }
 
 .heart-container{
@@ -137,23 +165,10 @@ align-items:center;
 
 .big-heart span{
 position:absolute;
-color:white;
-font-size:16px;
+font-size:14px;
 text-align:center;
 padding:10px;
 max-width:120px;
-}
-
-.love-btn{
-margin-top:10px;
-padding:12px 30px;
-border:none;
-border-radius:50px;
-background:white;
-color:#d63384;
-font-weight:bold;
-cursor:pointer;
-animation:heartbeat 1.6s infinite;
 }
 
 /* Evento especial */
@@ -163,25 +178,25 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.9);
+background:rgba(0,0,0,0.95);
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-z-index:999;
+z-index:10;
 text-align:center;
 }
 
 .special-day h2{
 font-family:'Great Vibes',cursive;
 font-size:45px;
+color:#ff85c1;
 margin-bottom:20px;
 }
 
 @media(max-width:600px){
-h1{font-size:36px;}
-.love-section h2{font-size:28px;}
-.special-day h2{font-size:30px;}
+h1{font-size:34px;}
+.love-section h2{font-size:26px;}
 }
 </style>
 </head>
@@ -215,31 +230,23 @@ pero decidió volver a unirnos.
 <button class="heart-btn" onclick="volverOpciones()">Elegir otra historia</button>
 </div>
 
-<!-- SECCIÓN ¿ME AMAS? -->
+<!-- ¿ME AMAS? -->
 <div class="love-section">
 <h2>¿Me amas? 💗</h2>
 <div class="heart-container">
 <div id="bigHeart" class="big-heart">❤️</div>
 </div>
-<button class="love-btn" onclick="growHeart()">Te Amo</button>
+<button class="heart-btn" onclick="growHeart()">Te Amo</button>
 </div>
 
 <script>
 
 /* Navegación */
-function irOpciones(){
-inicio.classList.add("hidden");
-opciones.classList.remove("hidden");
-}
-function volverInicio(){
-opciones.classList.add("hidden");
-inicio.classList.remove("hidden");
-}
-function volverOpciones(){
-historia.classList.add("hidden");
-opciones.classList.remove("hidden");
-}
+function irOpciones(){inicio.classList.add("hidden");opciones.classList.remove("hidden");}
+function volverInicio(){opciones.classList.add("hidden");inicio.classList.remove("hidden");}
+function volverOpciones(){historia.classList.add("hidden");opciones.classList.remove("hidden");}
 
+/* Historias */
 function verHistoria(num){
 let titulo=document.getElementById("tituloHistoria");
 let contenido=document.getElementById("contenidoHistoria");
@@ -249,42 +256,26 @@ titulo.innerText="Ofir y el Amor";
 contenido.innerHTML=`
 <p class="fade-text">Había una vez un soñador llamado José Fabricio.</p>
 <p class="fade-text">Construía algo grande llamado Ofir.</p>
-<p class="fade-text">Pero el verdadero tesoro no era oro… era América.</p>
-<p class="fade-text">Ella fue apoyo cuando el camino era difícil.</p>
-<p class="fade-text">Fue calma cuando el estrés pesaba.</p>
-<p class="fade-text">Fue fe cuando aún no se veían los frutos.</p>
-<p class="fade-text">Mientras él soñaba con grandeza, ella soñaba con verlo lograrlo.</p>
-<p class="fade-text">No era solo una historia de comercio.</p>
-<p class="fade-text">Era una historia de amor creciendo juntos.</p>
-`;
+<p class="fade-text">Pero el verdadero tesoro era América.</p>
+<p class="fade-text">Ella fue apoyo, fe y ternura.</p>
+<p class="fade-text">Y juntos construyen un futuro eterno.</p>`;
 }
 
 if(num===2){
 titulo.innerText="Donde Siempre Volvimos a Elegirnos";
 contenido.innerHTML=`
 <p class="fade-text">Nos conocimos hace casi dos años.</p>
-<p class="fade-text">La vida nos separó… pero un juego nos volvió rivales.</p>
-<p class="fade-text">Y el destino nos volvió a unir.</p>
-<p class="fade-text">Desde Cochabamba viajé hasta Potosí para verte.</p>
-<p class="fade-text">Viajé una vez. Luego otra.</p>
-<p class="fade-text">Y lo volvería a hacer mil veces más.</p>
+<p class="fade-text">Un juego nos volvió rivales.</p>
+<p class="fade-text">Desde Cochabamba viajé hasta Potosí por ti.</p>
 <p class="fade-text">El 19 de diciembre de 2025 nos comprometimos.</p>
-<p class="fade-text">Y aunque después de cada despedida llorabas,</p>
-<p class="fade-text">era amor profundo.</p>
-<p class="fade-text">Porque siempre nos volvemos a elegir.</p>
-`;
+<p class="fade-text">Y siempre nos volveremos a elegir.</p>`;
 }
 
 opciones.classList.add("hidden");
 historia.classList.remove("hidden");
 
-animarTexto();
-}
-
-/* Animación texto */
-function animarTexto(){
 document.querySelectorAll(".fade-text").forEach((t,i)=>{
-setTimeout(()=>{t.classList.add("show");}, i*700);
+setTimeout(()=>{t.classList.add("show");}, i*600);
 });
 }
 
@@ -295,18 +286,13 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 let particles=[];
-for(let i=0;i<70;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2+1,
-speed:Math.random()*1+0.3
-});
+for(let i=0;i<100;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2+1,speed:Math.random()*0.5+0.2});
 }
 
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="rgba(255,255,255,0.7)";
+ctx.fillStyle="#ff4fa3";
 particles.forEach(p=>{
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
@@ -321,19 +307,17 @@ animate();
 /* Corazón interactivo */
 let heartSize=60;
 let clicks=0;
-
 function growHeart(){
 const heart=document.getElementById("bigHeart");
 clicks++;
 heartSize+=15;
 heart.style.fontSize=heartSize+"px";
-
 if(clicks>=8){
 heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
 }
 }
 
-/* Evento especial 19 diciembre */
+/* Evento 19 diciembre */
 let today=new Date();
 if(today.getDate()===19 && today.getMonth()===11){
 let special=document.createElement("div");
@@ -341,8 +325,7 @@ special.classList.add("special-day");
 special.innerHTML=`
 <h2>19 de Diciembre 💍</h2>
 <p>El día que prometimos elegirnos para siempre.</p>
-<button class="heart-btn" onclick="this.parentElement.remove()">Cerrar</button>
-`;
+<button class="heart-btn" onclick="this.parentElement.remove()">Cerrar</button>`;
 document.body.appendChild(special);
 }
 
