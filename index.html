@@ -457,16 +457,47 @@ setTimeout(()=>{t.classList.add("show");}, i*600);
 }
 
 /* Corazón interactivo */
-let heartSize=60;
-let clicks=0;
+let heartSize = 60;
+let clicks = 0;
+let activated = false;
+
 function growHeart(){
-const heart=document.getElementById("bigHeart");
-clicks++;
-heartSize+=15;
-heart.style.fontSize=heartSize+"px";
-if(clicks>=8){
-heart.innerHTML="❤️<span>Yo te amo muchísimo más 💖</span>";
+  const heart = document.getElementById("bigHeart");
+  clicks++;
+
+  heartSize += 8;
+  heart.style.fontSize = heartSize + "px";
+  heart.style.transform = "scale(1.1)";
+
+  setTimeout(()=>{
+    heart.style.transform = "scale(1)";
+  },200);
+
+  if(clicks >= 15 && !activated){
+    activated = true;
+
+    heart.innerHTML = "❤️<span>Yo te amo muchísimo más 💖</span>";
+
+    startHeartRain();
+  }
 }
+
+function startHeartRain(){
+  for(let i=0;i<40;i++){
+    setTimeout(()=>{
+      const h = document.createElement("div");
+      h.classList.add("falling-heart");
+      h.innerHTML = "💖";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = (Math.random()*20+15)+"px";
+      document.body.appendChild(h);
+
+      setTimeout(()=>{
+        h.remove();
+      },4000);
+
+    }, i*150);
+  }
 }
 
 /* Fondo partículas */
